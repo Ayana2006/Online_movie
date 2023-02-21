@@ -1,0 +1,432 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+
+<body class="body">
+	{% include 'include/header.html' %}
+	<!-- details -->
+	<section class="section section--details">
+		<!-- details content -->
+		<div class="container">
+			<div class="row">
+				<!-- title -->
+				<div class="col-12">
+					<h1 class="section__title section__title--mb">{{movie.title}}</h1>
+				</div>
+				<!-- end title -->
+
+				<!-- content -->
+				<div class="col-12 col-xl-6">
+					<div class="card card--details">
+						<div class="row">
+							<!-- card cover -->
+							<div class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5">
+								<div class="card__cover">
+									<img src="{{movie.poster.url}}" alt="">
+									<span class="card__rate card__rate--green">{{movie.rating}}</span>
+								</div>
+
+								{% if movie.category.name != 'Сериал' %}
+								<a href="{{movie.trailer}}" class="card__trailer"><i class="icon ion-ios-play-circle"></i>Трейлер</a>
+							{% endif %}
+							</div>
+							<!-- end card cover -->
+
+							<!-- card content -->
+							<div class="col-12 col-md-8 col-lg-9 col-xl-7">
+								<div class="card__content">
+									<ul class="card__meta">
+										<li><span>Режиссер:</span><a href="#">{{movie.directors}}</a></li> 
+									    <li><span>Актеры:</span><a href="#">{{movie.actors}}</a></li>
+										<li><span>Жанр:</span><a href="#">{{movie.genres}}</a>
+										<li><span>Дата выхода:</span>{{movie.year|date:'Y.d.m'}}</li>
+										<li><span>Длительность:</span>{{movie.running_time}}</li>
+										<li><span>Страна:</span> <a href="#">{{movie.country}}</a></li>
+									</ul>
+									<div class="card__description">{{movie.description}}</div>
+								</div>
+							</div>
+							<!-- end card content -->
+						</div>
+					</div>
+				</div>
+				<!-- end content -->
+
+				<!-- player -->
+				<div class="col-12 col-xl-6">
+					<video controls crossorigin playsinline poster="{{movie.movie_trailer.url}}" id="player">
+						<!-- Video files -->
+						<source src="{{movie.movie.url}}" type="video/mp4" size="576">
+						<source src="{{movie.movie.url}}" type="video/mp4" size="720">
+						<source src="{{movie.movie.url}}" type="video/mp4" size="1080">
+
+						<!-- Caption files -->
+						<track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+						    default>
+						<track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
+
+						<!-- Fallback for browsers that don't support the <video> element -->
+						<a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+					</video>
+				</div>
+				<!-- end player -->
+
+		</div>
+		<!-- end details content -->
+	</section>
+	<!-- end details -->
+
+	<!-- content -->
+	<section class="content">
+		<div class="content__head">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<!-- content title -->
+						<h2 class="content__title">Подробнее</h2>
+						<!-- end content title -->
+
+						<!-- content tabs nav -->
+						<ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Комментарии</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Отзывы</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Фото</a>
+							</li>
+							{% if movie.category.name == 'Сериал' %}
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Серии</a>
+							</li>
+							{%endif%}
+						</ul>
+						<!-- end content tabs nav -->
+
+						<!-- content mobile tabs nav -->
+						<div class="content__mobile-tabs" id="content__mobile-tabs">
+							<div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<input type="button" value="Comments">
+								<span></span>
+							</div>
+
+							<div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+								<ul class="nav nav-tabs" role="tablist">
+									<li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Комментарии</a></li>
+
+									<li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Отзывы</a></li>
+
+									<li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Фото</a></li>
+									{% if movie.category.name == 'Сериал' %}
+									<li class="nav-item"><a class="nav-link" id="4-tab" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Серии</a></li>
+									{%endif%}
+								</ul>
+							</div>
+						</div>
+						<!-- end content mobile tabs nav -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-8 col-xl-8">
+					<!-- content tabs -->
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+							<div class="row">
+								<!-- comments -->
+								<div class="col-12">
+									<div class="comments">
+										<ul class="comments__list">
+											{% for comment in movie.movie_comment.all %}
+											{% if comment.parent == Null %}
+											<li class="comments__item">
+												<div class="comments__autor">
+													<img class="comments__avatar" src="{% static 'img/user.svg' %}" alt="">
+													<span class="comments__name">{{comment.user.username}}</span>
+													<span class="comments__time">{{comment.created|date:'d.m.Y, H:i'}}</span>
+												</div>
+												<p class="comments__text">{{comment.text}}</p>
+														<form method="POST">
+												<div class="comments__actions">
+													<div class="comments__rate">
+														        {%csrf_token%}
+														        <input type="hidden" name="comment_id" value="{{comment.id}}">
+														        <button type="submit" name="comment_likes">{{comment.likes.count}}<i class="icon ion-md-thumbs-up color"></i></button>
+														
+															    {%csrf_token%}
+														        <input type="hidden" name="comment_id" value="{{comment.id}}">
+														        <button type="submit" name="comment_dislikes">{{comment.dislikes.count}}<i class="icon ion-md-thumbs-down"></i></button>
+													</div>
+													{% csrf_token %}
+													{% if comment.user == request.user %}
+                                                    <input name="id" type="hidden" value="{{comment.id}}">
+													<button class='button_2' type="submit" name="delete" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+													<button type="button" onclick="answer({{comment.id}})" name="comment"><i class="icon ion-ios-share-alt"></i>Ответить</button>
+												{% endif %}
+												</div>
+											</li>
+													    </form>
+											
+											{% for answer in comment.sons.all %}
+											<li class="comments__item comments__item--answer">
+												<div class="comments__autor">
+													<img class="comments__avatar" src="{% static 'img/user.svg' %}" alt="">
+													<span class="comments__name">{{answer.user.username}}</span>
+													<span class="comments__time">{{answer.created|date:'d.m.Y, H:i'}}</span>
+												</div>
+												<p class="comments__text">{{answer.parent.user.username}},{{answer.text}}</p>
+														<form method="POST">
+												<div class="comments__actions">
+													<div class="comments__rate">
+															{%csrf_token%}
+															<input type="hidden" name="comment_id" value="{{answer.id}}">
+															<button type="submit" name="comment_likes">{{answer.likes.count}}<i class="icon ion-md-thumbs-up color"></i></button>
+													
+															{%csrf_token%}
+															<input type="hidden" name="comment_id" value="{{answer.id}}">
+															<button type="submit" name="comment_dislikes">{{answer.dislikes.count}}<i class="icon ion-md-thumbs-down"></i></button>
+													</div>
+													{% csrf_token %}
+													{% if answer.user == request.user %}
+                                                    <input name="id" type="hidden" value="{{comment.id}}">
+													<button class='button_2' type="submit" name="delete" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+													<button type="submit" onclick="(answer({{comment.id}}))" name="comment" ><i class="icon ion-ios-share-alt"></i>Ответить</button>
+												{% endif %}
+												</div>
+											</li>
+													</form>
+											{% endfor %} 
+											{% endif %}
+											{% endfor %}
+
+										</ul>
+                                        <form method="POST" class="form">
+											{% csrf_token %}
+											<input type='hidden' name='parent' id = 'parent_val'>
+											<textarea id="text" name="text" class="form__textarea" placeholder="Добавить комментарий"></textarea>
+											<button type="submit" name="comment" class="form__btn">Отправить</button>
+										</form> 
+									</div>
+								</div>
+								<!-- end comments -->
+							</div>
+						</div>
+
+						<div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+							<div class="row">
+								<!-- reviews -->
+								<div class="col-12">
+									<div class="reviews">
+										<ul class="reviews__list">
+										{% for reviews in movie.review_movie.all %}
+											<li class="reviews__item">
+												<div class="reviews__autor" style="position: relative;">
+													<img class="reviews__avatar" src="{% static 'img/user.svg' %}" alt="">
+													<span class="reviews__name">{{reviews.user.username}}</span>
+													<span class="reviews__time">{{reviews.created|date:'d.m.Y, H:i'}}</span>
+
+													<span class="reviews__rating reviews__rating--green">{{reviews.number}}</span>
+													<form style="position: absolute;top: 240%;right: 10px;" method="POST">
+													{% csrf_token %}
+													{% if reviews.user == request.user %}
+                                                    <input name="id" type="hidden" value="{{reviews.id}}">
+													<button class='button_2' type="submit" name="delete" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+													{% endif %}
+												</div>
+											</form>
+												<p class="reviews__text">{{reviews.text}}</p>
+											</li>
+										</ul>
+										{% endfor %}
+
+										<form method ='POST' class="form">
+										{% csrf_token %}
+											<input type="text" name ='title' class="form__input" placeholder="Загаловок">
+											<textarea name = 'text' class="form__textarea" placeholder="Отзыв"></textarea>
+											<div class="form__slider">
+												<div class="form__slider-rating" id="slider__rating"></div>
+												<div class="form__slider-value" id="form__slider-value"></div>
+												<input type="hidden" id="rate" name="rating">
+											</div>
+											<button type="submit" name='review' class="form__btn">Отправить</button>
+										</form>
+									</div>
+								</div>
+								<!-- end reviews -->
+							</div>
+						</div>
+
+						<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
+							<!-- project gallery -->
+							<div class="gallery" itemscope>
+								<div class="row row--grid">
+									<!-- gallery item -->
+									{% for photo in movie.gallery.all %}
+									<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
+										<a href="{{photo.image.url}}" itemprop="contentUrl" data-size="1920x1280">
+											<img src="{{photo.image.url}}" itemprop="thumbnail" alt="Image description" />
+										</a>
+										<figcaption itemprop="caption description"></figcaption>
+									</figure>
+									<!-- end gallery item -->
+									{% endfor %}
+								</div>
+							</div>
+							<!-- end project gallery -->
+						</div>
+						{% if movie.category.name == 'Сериал' %}
+						<div class="tab-pane fade" id="tab-4"  aria-labelledby="4-tab">
+							<div class="gallery">
+								<div class="row row--grid">
+									<!-- gallery item -->
+									<ul>
+									{% for series in movie.series.all %}
+										<li>
+										<a onclick="document.location='{% url 'series' series.id %}'" class="header__nav-link" href="{% url 'series' series.id %}"> 
+											<span>{{forloop.counter}} серия</span>
+											</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</div>
+							</div>
+							<!-- end project gallery -->
+						</div>
+						{% endif %}
+					</div>
+					<!-- end content tabs -->
+				</div>
+
+				<!-- sidebar -->
+				<div class="col-12 col-lg-4 col-xl-4">
+					<div class="row row--grid">
+						<!-- section title -->
+						<div class="col-12">
+							<h2 class="section__title section__title--sidebar">Вам также может понравиться...</h2>
+						</div>
+						<!-- end section title -->
+						{%for rec in recomandations%}
+						<!-- card -->
+						<div class="col-6 col-sm-4 col-lg-6">
+							<div class="card">
+								<div class="card__cover">
+									<img src="{{rec.poster.url}}" alt="">
+									<a href="{% url 'movie_detail' rec.id %}" class="card__play">
+										<i class="icon ion-ios-play"></i>
+									</a>
+									<span class="card__rate card__rate--green">{{rec.rating}}</span>
+								</div>
+								<div class="card__content">
+									<h3 class="card__title"><a href="{% url 'movie_detail' rec.id%}">{{rec.title}}</a></h3>
+								<span class="card__category">
+									<a href="#">{{rec.genres}}</a>
+								</span>
+								<span class="card__category">
+									<a href="#">{{rec.country}}</a>
+								</span>
+								</div>
+							</div>
+						</div>
+						<!-- end card -->
+						{%endfor%}
+					</div>
+				</div>
+				<!-- end sidebar -->
+			</div>
+		</div>
+	</section>
+	<!-- end content -->
+
+		<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="footer__content">
+						<a href="#" class="footer__logo">
+							<img src="{{setting.logo.url}}" alt="">
+						</a>
+
+						<span class="footer__copyright">© Broadway, 2023—2028 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
+
+						<nav class="footer__nav">
+							<a href="{% url 'about' %}">О Broadway</a>
+							<a href="{% url 'contacts' %}">Контакты</a>
+							<a href="{% url 'privacy' %}">Политика конфиденциальности</a>
+						</nav>
+
+						<button class="footer__back" type="button">
+							<i class="icon ion-ios-arrow-round-up"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- end footer -->
+
+	<!-- Root element of PhotoSwipe. Must have class pswp. -->
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+		<!-- Background of PhotoSwipe. 
+		It's a separate element, as animating opacity is faster than rgba(). -->
+		<div class="pswp__bg"></div>
+
+		<!-- Slides wrapper with overflow:hidden. -->
+		<div class="pswp__scroll-wrap">
+
+			<!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+			<!-- don't modify these 3 pswp__item elements, data is added later on. -->
+			<div class="pswp__container">
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+			</div>
+
+			<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+			<div class="pswp__ui pswp__ui--hidden">
+
+				<div class="pswp__top-bar">
+
+					<!--  Controls are self-explanatory. Order can be changed. -->
+
+					<div class="pswp__counter"></div>
+
+					<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+					<!-- Preloader -->
+					<div class="pswp__preloader">
+						<div class="pswp__preloader__icn">
+							<div class="pswp__preloader__cut">
+								<div class="pswp__preloader__donut"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+				<div class="pswp__caption">
+					<div class="pswp__caption__center"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	let parent_val = document.getElementById('parent_val')
+	function answer(parent){
+		parent_val.value = parent
+	}
+</script>
+	{% endblock %}

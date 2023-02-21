@@ -1,0 +1,121 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+
+<body class="body">
+	{% include 'include/header.html' %}
+		<!-- details -->
+	<section class="section section--details">
+		<!-- details content -->
+		<div class="container">
+			<div class="row">
+				<!-- title -->
+				<div class="col-12">
+					<h1 class="section__title section__title--mb">{{series.series.title}}</h1>
+				</div>
+				<!-- end title -->
+				<!-- player -->
+				<div class="col-12 col-xl-6">
+					<video controls crossorigin playsinline poster="{{series.video.url}}" id="player">
+						<!-- Video files -->
+						<source src="{{series.video.url}}" type="video/mp4" size="576">
+						<source src="{{series.video.url}}" type="video/mp4" size="720">
+						<source src="{{series.video.url}}" type="video/mp4" size="1080">
+
+						<!-- Caption files -->
+						<track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+						    default>
+						<track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
+
+						<!-- Fallback for browsers that don't support the <video> element -->
+						<a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+					</video>
+				</div>
+				<!-- end player -->
+									<!-- content -->
+	<section class="content">
+		<div class="content__head">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<!-- content tabs nav -->
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Серии</a>
+							</li>
+						<!-- end content tabs nav -->
+
+						<!-- content mobile tabs nav -->
+						<div class="content__mobile-tabs" id="content__mobile-tabs">
+							<div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+								<ul class="nav nav-tabs" role="tablist">
+									<li class="nav-item"><a class="nav-link" id="4-tab" data-toggle="tab" href="#tab-4" role="tab" aria-controls="tab-4" aria-selected="false">Серии</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- end content mobile tabs nav -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-8 col-xl-8">
+						<div class="tab-pane fade" id="tab-4"  aria-labelledby="4-tab">
+							<div class="gallery">
+								<div class="row row--grid">
+									<!-- gallery item -->
+									<ul>
+									{% for series in tv_series %}
+										<li  style='width:100px;height:20px; margin-bottom:10px;'>
+										<a onclick="document.location='{% url 'series' series.id %}'" class="header__nav-link" href="{% url 'series' series.id %}"> 
+											<span>{{forloop.counter}} серия</span>
+											</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</div>
+							</div>
+							<!-- end project gallery -->
+						</div>
+					</div>
+					<!-- end content tabs -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end content -->
+
+		</div>
+		<!-- end details content -->
+	</section>
+	<!-- end details -->
+	
+	<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="footer__content">
+						<a href="#" class="footer__logo">
+							<img src="{{setting.logo.url}}" alt="">
+						</a>
+
+						<span class="footer__copyright">© Broadway, 2023—2028 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
+
+						<nav class="footer__nav">
+							<a href="{% url 'about' %}">О Broadway</a>
+							<a href="{% url 'contacts' %}">Контакты</a>
+							<a href="{% url 'privacy' %}">Политика конфиденциальности</a>
+						</nav>
+
+						<button class="footer__back" type="button">
+							<i class="icon ion-ios-arrow-round-up"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- end footer -->
+	{% endblock %}

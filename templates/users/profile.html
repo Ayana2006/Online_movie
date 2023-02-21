@@ -1,0 +1,370 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'include/header.html' %}
+
+	<!-- page title -->
+	<section class="section section--first section--bg" data-bg="{{setting.bg.url}}">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section__wrap">
+						<!-- section title -->
+						<h2 class="section__title">Профиль</h2>
+						<!-- end section title -->
+
+						<!-- breadcrumb -->
+						<ul class="breadcrumb">
+							<li class="breadcrumb__item"><a href="{% url 'index' %}">Главная</a></li>
+							<li class="breadcrumb__item breadcrumb__item--active">Профиль</li>
+						</ul>
+						<!-- end breadcrumb -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end page title -->
+
+	<!-- content -->
+	<div class="content content--profile">
+		<!-- profile -->
+		<div class="profile">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="profile__content">
+							<div class="profile__user">
+								<div class="profile__avatar">
+								{% if request.user.profile_image %}
+									<img src="{{user.profile_image.url}}" alt="">
+								{% else %}
+									<img src="/media/no_image.jpeg" alt="">
+								{% endif %}
+								</div>
+								<div class="profile__meta">
+									<h3>{{user.username}}</h3>
+									<span>Id пользователя:{{user.id}}</span>
+								</div>
+							</div>
+
+							<!-- content tabs nav -->
+							<ul class="nav nav-tabs content__tabs content__tabs--profile" id="content__tabs" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Профиль</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Настройки</a>
+								</li>
+							</ul>
+							<!-- end content tabs nav -->
+
+							<!-- content mobile tabs nav -->
+							<div class="content__mobile-tabs content__mobile-tabs--profile" id="content__mobile-tabs">
+								<div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<input type="button" value="Profile">
+									<span></span>
+								</div>
+
+								<div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Профиль</a></li>
+
+										<li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Настройки</a></li>
+									</ul>
+								</div>
+							</div>
+							<!-- end content mobile tabs nav -->
+							
+							<a  href="{% url 'logout' %}" class="profile__logout">
+								<i class="icon ion-ios-log-out"></i>
+								<span>Выйти</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end profile -->
+		<div class="container">
+			<!-- content tabs -->
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+					<div class="row row--grid">
+
+						<!-- stats -->
+						<div class="col-12 col-sm-6 col-xl-3">
+							<div class="stats">
+								<span>Просмотренных фильмов</span>
+								<p><a href="#">3</a></p>
+								<i class="icon ion-ios-film"></i>
+							</div>
+						</div>
+						<!-- end stats -->
+
+						<!-- stats -->
+						<div class="col-12 col-sm-6 col-xl-3">
+							<div class="stats">
+								<span>Ваши комментарии</span>
+								<p>{{user.user_comment.count}}</p>
+								<i class="icon ion-ios-chatbubbles"></i>
+							</div>
+						</div>
+						<!-- end stats -->
+
+						<!-- stats -->
+						<div class="col-12 col-sm-6 col-xl-3">
+							<div class="stats">
+								<span>Ваши отзывы</span>
+								<p>{{user.review_user.count}}</p>
+								<i class="icon ion-ios-star-half"></i>
+							</div>
+						</div>
+						<!-- end stats -->
+
+						<!-- dashbox -->
+						<div class="col-12 col-xl-6">
+							<div class="dashbox">
+								<div class="dashbox__title">
+									<h3><i class="icon ion-ios-film"></i>Фильмы для вас</h3>
+
+									<div class="dashbox__wrap">
+										<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+										<a class="dashbox__more" href="{% url 'index' %}">Посмотреть все</a>
+									</div>
+								</div>
+
+								<div class="dashbox__table-wrap">
+									<table class="main__table main__table--dash">
+										<thead>
+											<tr>
+												<th>НАЗВАНИЕ</th>
+											    <th>ЖАНР</th>
+											    <th>РЕЙТИНГ</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+											{% for film in recomandations %}
+												<td>
+													<div class="main__table-text"><a href="{% url 'movie_detail' film.id %}">{{film.title}}</a></div>
+												</td>
+												<td>
+													<div class="main__table-text">{{film.genres}}</div>
+												</td>
+												<td>
+													<div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i>{{film.rating}}</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- end dashbox -->
+
+						<!-- dashbox -->
+						<div class="col-12 col-xl-6">
+							<div class="dashbox">
+								<div class="dashbox__title">
+									<h3><i class="icon ion-ios-star-half"></i>Последние обзоры</h3>
+
+									<div class="dashbox__wrap">
+										<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+										<a class="dashbox__more" href="{% url 'index' %}">Посмотреть все</a>
+									</div>
+								</div>
+
+								<div class="dashbox__table-wrap">
+									<table class="main__table main__table--dash">
+										<thead>
+											<tr>
+												<th>НАЗВАНИЕ</th>
+												<th>РЕЖИССЁР</th>
+												<th>РЕЙТИНГ</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+											{% for movie in recomandations %}
+												<td>
+													<div class="main__table-text"><a href="{% url 'movie_detail' movie.id %}">{{movie.title}}</a></div>
+												</td>
+												<td>
+													<div class="main__table-text">{{movie.directors.name}}</div>
+												</td>
+												<td>
+													<div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i>{{movie.rating}}</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- end dashbox -->
+					</div>
+				</div>
+
+				<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
+					<div class="row">
+					{% if user == request.user %} 
+						<!-- details form -->
+						<div class="col-12 col-lg-6">
+							<form method='POST' enctype='multipart/form-data' class="form form--profile">
+							{% csrf_token %}
+								<div class="row row--form">
+									<div class="col-12">
+										<h4 class="form__title">Изменение профиля</h4>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="username">Пользователь</label>
+											<input value='{{user.username}}' type="text" name="username" class="form__input" placeholder="Username">
+										</div>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="email">Почта</label>
+											<input  type="email" name="email" class="form__input" placeholder="email@email.com" value='{{user.email}}'>
+										</div>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="firstname">Имя</label>
+											<input  type="text" name="first_name" class="form__input" placeholder="John" value='{{user.first_name}}'>
+										</div>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="lastname">Фамилия</label>
+											<input type="text" name="last_name" class="form__input" placeholder="Doe" value='{{user.last_name}}'>
+										</div>
+									</div>
+
+									
+									<div class="col-12">
+										<div class="form__group">
+											<label class="form__label" for="profile_image">Изображение профиля</label>
+											<input name="profile_image" type="file" class="form__input">
+										</div>
+									</div>
+
+									<div class="col-12">
+										<button class="form__btn" name="update"  type="submit">Сохранить</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- end details form -->
+
+						<!-- password form -->
+						<div class="col-12 col-lg-6">
+							<form  method='POST' class="form form--profile">
+							{% csrf_token %}
+								<div class="row row--form">
+									<div class="col-12">
+										<h4 class="form__title">Изменить пароль</h4>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="oldpass">Старый пароль</label>
+											<input id="oldpass" type="password" name="oldpass" class="form__input">
+										</div>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="newpass">Новый пароль</label>
+											<input id="newpass" type="password" name="newpass" class="form__input">
+										</div>
+									</div>
+
+									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+										<div class="form__group">
+											<label class="form__label" for="confirmpass">Подтвердите новый пароль</label>
+											<input id="confirmpass" type="password" name="confirmpass" class="form__input">
+										</div>
+									</div>
+
+									<div class="col-12">
+										<button class="form__btn" name="password"  type="submit">Изменить</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- end password form -->
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<!-- end content tabs -->
+		</div>
+	</div>
+	<!-- end content -->
+
+	<!-- partners -->
+	<section class="section section--border">
+		<div class="container">
+			<div class="row">
+				<!-- section title -->
+				<div class="col-12">
+					<h2 class="section__title section__title--mb">{{partner.title}}</h2>
+				</div>
+				<!-- end section title -->
+
+				<!-- section text -->
+				<div class="col-12">
+					<p class="section__text">{{partner.text}}</p>
+				</div>
+				<!-- end section text -->
+				<!-- partner -->
+				<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+				{% for image in partner.image.all%}
+					<a href="{{image.link}}" class="partner">
+						<img src="{{image.image.url}}" alt="" class="partner__img">
+					</a>
+				</div>
+				{% endfor %}
+				<!-- end partner -->
+			</div>
+		</div>
+	</section>
+	<!-- end partners -->
+<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="footer__content">
+						<a href="#" class="footer__logo">
+							<img src="{{setting.logo.url}}" alt="">
+						</a>
+
+						<span class="footer__copyright">© Broadway, 2023—2028 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
+
+						<nav class="footer__nav">
+						    <a href="{% url 'about' %}">О Broadway</a>
+							<a href="{% url 'contacts' %}">Контакты</a>
+							<a href="{% url 'privacy' %}">Политика конфиденциальности</a>
+						</nav>
+
+						<button class="footer__back" type="button">
+							<i class="icon ion-ios-arrow-round-up"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- end footer -->
+	{% endblock %}
