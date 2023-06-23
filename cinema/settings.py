@@ -56,7 +56,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 3
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -68,7 +68,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_LOGIN_ON_GET=True
 
-
+#667700430369-cq7fcrfot7brka8ttgajfjh0kvrs3858.apps.googleusercontent.com
+#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
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

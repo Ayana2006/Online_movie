@@ -4,7 +4,6 @@ from apps.movies.models import Category, Movie, Series
 from apps.users.models import  Comments, Likes, DisLikes, Reviews
 from apps.settings.models import Settings
 from django.db.models import Sum, Count
-from django.core.paginator import Paginator
 from django.db.models import Q
 # Create your views here.
 def movie_detail(request, id):

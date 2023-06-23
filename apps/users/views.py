@@ -103,24 +103,24 @@ def forgot_pass(request):
     setting = Settings.objects.latest('id')
     if request.method == 'POST':
         email = request.POST.get('email')
-        try:
-            user = User.objects.get(email = email)
-            rd_num = random.randint(100000000,999999999)
-            forgot_pass = Forgot_pass.objects.create( email = email, code = rd_num)
-            forgot_pass.save()
-            send_mail(
-            #subject 
-            f"Код для сброса пароля", 
-            #message 
-            f"Здравствуйте,код подтверждения: {rd_num}. Никому не показывайте код", 
-            #from email 
-            'jamankulova.ayana283@gmail.com', 
-            #to email 
-            [email] 
+        # try:
+        user = User.objects.get(email = email)
+        rd_num = random.randint(100000000,999999999)
+        forgot_pass = Forgot_pass.objects.create( email = email, code = rd_num)
+        forgot_pass.save()
+        send_mail(
+        #subject 
+        f"Код для сброса пароля", 
+        #message 
+        f"Здравствуйте,код подтверждения: {rd_num}. Никому не показывайте код", 
+        #from email 
+        'noreply@somehost.local', 
+        #to email 
+        [email] 
         )
-            return redirect('create_password')
-        except:
-            return HttpResponse("Пользователя с такой почтой нету")
+        return redirect('create_password')
+        # except:
+        #     return HttpResponse("Пользователя с такой почтой нету")
     context = {
             'setting' : setting,
         }

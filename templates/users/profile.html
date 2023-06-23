@@ -131,7 +131,7 @@
 									<h3><i class="icon ion-ios-film"></i>Фильмы для вас</h3>
 
 									<div class="dashbox__wrap">
-										<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+										<a class="dashbox__refresh" href="{% url 'profile' user.id %}"><i class="icon ion-ios-refresh"></i></a>
 										<a class="dashbox__more" href="{% url 'index' %}">Посмотреть все</a>
 									</div>
 								</div>
@@ -173,7 +173,7 @@
 									<h3><i class="icon ion-ios-star-half"></i>Последние обзоры</h3>
 
 									<div class="dashbox__wrap">
-										<a class="dashbox__refresh" href="#"><i class="icon ion-ios-refresh"></i></a>
+										<a class="dashbox__refresh" href="{% url 'profile' user.id %}"><i class="icon ion-ios-refresh"></i></a>
 										<a class="dashbox__more" href="{% url 'index' %}">Посмотреть все</a>
 									</div>
 								</div>
@@ -194,7 +194,7 @@
 													<div class="main__table-text"><a href="{% url 'movie_detail' movie.id %}">{{movie.title}}</a></div>
 												</td>
 												<td>
-													<div class="main__table-text">{{movie.directors.name}}</div>
+													<div class="main__table-text">{{movie.directors}}</div>
 												</td>
 												<td>
 													<div class="main__table-text main__table-text--rate"><i class="icon ion-ios-star"></i>{{movie.rating}}</div>
@@ -219,7 +219,7 @@
 							{% csrf_token %}
 								<div class="row row--form">
 									<div class="col-12">
-										<h4 class="form__title">Изменение профиля</h4>
+										<h4 class="form__title">Изменить профиль</h4>
 									</div>
 
 									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
@@ -299,6 +299,11 @@
 									<div class="col-12">
 										<button class="form__btn" name="password"  type="submit">Изменить</button>
 									</div>
+
+									<div class="col-12">
+										<button class="form__btn" name="delete"  type="submit">Удалить профиль</button>
+									</div>
+
 								</div>
 							</form>
 						</div>
