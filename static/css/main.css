@@ -3519,7 +3519,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   color: green !important;
 }
 .mfp-bg {
-  background-color: $bg;
+  background-color: bg;
 }
 .mfp-iframe-scaler iframe {
   border-radius: 6px;
